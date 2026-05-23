@@ -102,6 +102,14 @@ Update-Database
 
 ---
 
+## 🔄 Version Control
+
+* Git-based workflow with feature branching strategy
+* Structured commits for incremental and traceable development
+* Isolated feature development across services and modules
+
+---
+
 ## 🎯 What This Project Demonstrates
 
 * Enterprise backend architecture
