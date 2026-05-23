@@ -4,6 +4,7 @@ using Enterprise_E_Commerce_Management_System.Models;
 using Enterprise_E_Commerce_Management_System.ViewModels.Order;
 using Enterprise_E_Commerce_Management_System.ViewModels.Orders;
 using Enterprise_E_Commerce_Management_System.ViewModels.Shipment;
+using Microsoft.EntityFrameworkCore;
 
 namespace Enterprise_E_Commerce_Management_System.Application.Orders
 {
@@ -14,6 +15,6 @@ namespace Enterprise_E_Commerce_Management_System.Application.Orders
         Task<OrderManagementPagedListViewModel> GetUserAssignedListAsync(OrderManagementFilterViewModel filter,int currencyId);
         Task<OrderDetailsViewModel> GetDetailsViewModelByIdAsync(int orderId);
         Task<OrderTrackViewModel> GetTrackViewModelAsync(string AccessToken,int currencyId);
-        Task<enCancelOrReturnOrderResult> CancelOrReturnAsync(int orderId, string notes);  
+        Task<enCancelOrReturnOrderResult> CancelOrReturnAsync(int orderId, string notes); 
     }
 }

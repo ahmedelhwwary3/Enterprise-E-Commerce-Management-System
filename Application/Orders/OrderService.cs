@@ -103,7 +103,7 @@ namespace Enterprise_E_Commerce_Management_System.Application.Orders
             //3.Update Cart
             cart.CustomerId = customerId;
             _cartService.Update(cart);
-
+            _uow.ChangeAutoDetectChangesStatus(Enabled:false);
             //4.Copy CartItems To OrderItems
             foreach (var item in cart.CartItems)
             {
@@ -119,6 +119,8 @@ namespace Enterprise_E_Commerce_Management_System.Application.Orders
                 //5.Delete CartItems
                 await _uow.CartItems.DeleteByIdAsync(item.Id);
             }
+            _uow.ChangeAutoDetectChangesStatus(Enabled: false);
+            _uow.DetectChanges();
             //6.Delete Cart
             await _uow.Carts.DeleteByIdAsync(cart.Id);
             await _uow.SaveChangesAsync();

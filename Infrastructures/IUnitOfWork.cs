@@ -73,6 +73,8 @@ namespace Enterprise_E_Commerce_Management_System.Infrastructures
         //IRoleRepository Roles { get; } 
         #endregion
         Task BeginTransactionAsync();
+        void ChangeAutoDetectChangesStatus(bool Enabled = false);
+        void DetectChanges();
         Task CommitAsync();
         Task RollbackAsync();
         Task SaveChangesAsync();

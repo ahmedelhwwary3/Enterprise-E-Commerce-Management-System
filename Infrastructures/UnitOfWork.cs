@@ -107,6 +107,14 @@ namespace Enterprise_E_Commerce_Management_System.Infrastructures
         {
             await _context.SaveChangesAsync();
         }
+        public void ChangeAutoDetectChangesStatus(bool Enabled=false)
+        {
+            _context.ChangeTracker.AutoDetectChangesEnabled = Enabled;
+        }
+        public void DetectChanges()
+        {
+            _context.ChangeTracker.DetectChanges();
+        }
         public async Task BeginTransactionAsync()
         {
             _transaction = await _context.Database.BeginTransactionAsync();
