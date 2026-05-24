@@ -4,6 +4,7 @@ using Enterprise_E_Commerce_Management_System.Infrastructures;
 using Enterprise_E_Commerce_Management_System.Infrastructures.Carts; 
 using Enterprise_E_Commerce_Management_System.Models.Carts;
 using Enterprise_E_Commerce_Management_System.ViewModels.Cart;
+using Microsoft.Office.Interop.Outlook;
 
 namespace Enterprise_E_Commerce_Management_System.Application.Carts
 {
@@ -48,8 +49,6 @@ namespace Enterprise_E_Commerce_Management_System.Application.Carts
             await _uow.Carts.AddAsync(cart);
             await _uow.SaveChangesAsync();
             return cart.Id;
-            //return await _query
-            //    .CreateAndGetId(cart);
         }
         public async Task<int> GetItemsTotalCountByIdAsync(int Id)
         {
@@ -64,7 +63,7 @@ namespace Enterprise_E_Commerce_Management_System.Application.Carts
 
         public async Task DeleteItemByItemIdAsync(int CartId, int ItemId)
         {
-            await _uow.Carts.DeleteItemByItemIdAsync(CartId, ItemId);
+            _uow.Carts.DeleteItemById(CartId, ItemId);
             await _uow.SaveChangesAsync();
 
             if (await _uow.Carts.IsEmpty(CartId))
@@ -72,21 +71,13 @@ namespace Enterprise_E_Commerce_Management_System.Application.Carts
                 await _uow.Carts.DeleteByIdAsync(CartId); 
                 await _uow.SaveChangesAsync();
             }
-        }
+        } 
 
-        public async Task DeleteItemsByIdAsync(int CartId, int ItemId)
-        {
-            await _uow.Carts.DeleteItemByItemIdAsync(CartId, ItemId);
-            await _uow.SaveChangesAsync();
-        }
-
-        public async Task DeleteByIdAsync(int cartId)
+        public async Task DeleteWithItemsByIdAsync(int cartId)
         {
             var cartIncludesItems = await _uow.Carts.GetByIdAsync(cartId,c=>c.CartItems);
-            foreach(var item in cartIncludesItems.CartItems)
-            {
-                await _uow.Carts.DeleteItemByItemIdAsync(cartId, item.Id);
-            }
+            var itemIds = cartIncludesItems.CartItems.Select(i => i.Id).ToArray();
+            _uow.Carts.DeleteItemsByIds(cartId, itemIds);
             await _uow.Carts.DeleteByIdAsync(cartId);
             await _uow.SaveChangesAsync();
         }

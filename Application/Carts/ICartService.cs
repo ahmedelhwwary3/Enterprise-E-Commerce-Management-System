@@ -13,6 +13,6 @@ namespace Enterprise_E_Commerce_Management_System.Application.Carts
         Task<Cart> GetByIdAsync(int Id);
         Task<Cart> GetWithItemsByIdAsync(int Id);
         Task DeleteItemByItemIdAsync(int CartId, int ItemId);
-        Task DeleteByIdAsync(int cartId);
+        Task DeleteWithItemsByIdAsync(int cartId);
     }
 }

@@ -140,7 +140,7 @@ namespace Enterprise_E_Commerce_Management_System.Controllers
             int? cartId = storage.GetInt32FromSessionOrCookies(storage.CartIdKey, HttpContext);
             if (cartId == null)
                 return NotFound("Cart not found.");
-            await _cartService.DeleteByIdAsync(cartId.Value);
+            await _cartService.DeleteWithItemsByIdAsync(cartId.Value);
 
             int count = await RefreshAndGetItemsCountAsync();
             if (count < 1)
